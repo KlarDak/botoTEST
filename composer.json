@@ -1,6 +1,10 @@
 {
     "name": "klardak/feedbackdb",
     "type": "library",
+    "repositories": [{
+        "type": "git",
+        "url": "https://github.com/KlarDak/BotoTEST"
+    }],
     "autoload": {
         "psr-4": {
             "KlarDak\\FeedbackDB\\": "src/"
