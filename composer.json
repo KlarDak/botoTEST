@@ -1,0 +1,16 @@
+{
+    "name": "klardak/feedbackdb",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "KlarDak\\FeedbackDB\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "KSD",
+            "email": "webmaster@wwbt-blog.ru"
+        }
+    ],
+    "require": {}
+}
