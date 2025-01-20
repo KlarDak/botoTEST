@@ -2,8 +2,8 @@
     "name": "klardak/feedbackdb",
     "type": "library",
     "repositories": [{
-        "type": "git",
-        "url": "https://github.com/KlarDak/BotoTEST"
+        "type": "vcs",
+        "url": "https://github.com/KlarDak/BotoTEST.git"
     }],
     "autoload": {
         "psr-4": {
@@ -16,5 +16,7 @@
             "email": "webmaster@wwbt-blog.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.1"
+    }
 }
