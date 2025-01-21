@@ -7,7 +7,7 @@
     class FeedbackDB {
         protected $db_connector;
 
-        function __construct(string $host = $_ENV["FDB_HOST"], string $login = $_ENV["FDB_LOGIN"], string $password = $_ENV["FDB_PASSWORD"], string $dbname = $_ENV["FDB_DBNAME"], string $driver = $_ENV["FDB_DRIVER"]) {
+        function __construct(string $host, string $login, string $password, string $dbname, string $driver = "mysql") {
             $this->db_connector = new \PDO("{$driver}:host={$host};dbname={$dbname}", $login, $password);
         }
 
