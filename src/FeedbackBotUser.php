@@ -35,12 +35,10 @@
             "is_dropped"
         ];
 
-        public function __construct(FeedbackConnector $DBConnector, array $userInfo) {
+        public function __construct(FeedbackConnector $DBConnector, int $user_id) {
             $this->feedbackConnector = $DBConnector;
 
-            foreach ($userInfo as $key => $value) {
-                $this->{$key} = $value;
-            }
+            $this->user_id = $user_id ?? 0;
         }
 
         /**
