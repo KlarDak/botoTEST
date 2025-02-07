@@ -1,1 +1,5 @@
 /vendor/
+.osp
+.vscode
+test.php
+.phpunit.result.cache

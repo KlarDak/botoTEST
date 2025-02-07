@@ -16,7 +16,17 @@
             self::$feedbackConnector = new FeedbackConnectorPDO("mysql-8.0", "root", "", "feedback_messages");
             self::$feedbackConnector->getPDO()->beginTransaction();
 
-            self::$feedbackBotUser = new FeedbackBotUser(self::$feedbackConnector, 0);
+            self::$feedbackBotUser = new FeedbackBotUser(self::$feedbackConnector, [
+                "user_id" => 1,
+                "username" => "Test",
+                "name" => "Test",
+                "date_registration" => "23-01-2024 01:06",
+                "is_admin" => 0,
+                "total_messages" => 0,
+                "replied_messages" => 0,
+                "is_banned" => 0,
+                "is_dropped" => 0
+            ]);
         }
 
         public static function tearDownAfterClass() : void { 
@@ -42,6 +52,10 @@
 
             $this->assertEquals(1, $checkRequest);
         }
+
+        public function testNewGetInfo() : void {
+            $this->assertEquals(0, self::$feedbackBotUser->is_admin);
+    }
 
         public function testGetInfo() : void {
             $asResult = self::$feedbackBotUser->getInfo();

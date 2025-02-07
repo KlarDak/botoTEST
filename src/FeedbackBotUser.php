@@ -6,7 +6,7 @@
     use KlarDak\FeedbackDB\Types\FeedbackConnectorPDO;
     use KlarDak\FeedbackDB\Types\FeedbackUserInfo;
 
-    class FeedbackBotUser {
+    class FeedbackBotUser extends FeedbackUserInfo {
         
         /**
          * Коннектор для базы данных (по прототипу FeedbackConnector)
@@ -35,10 +35,12 @@
             "is_dropped"
         ];
 
-        public function __construct(FeedbackConnector $DBConnector, int $user_id) {
+        public function __construct(FeedbackConnector $DBConnector, array $userInfo) {
             $this->feedbackConnector = $DBConnector;
 
-            $this->user_id = $user_id ?? 0;
+            foreach ($userInfo as $key => $value) {
+                $this->{$key} = $value;
+            }
         }
 
         /**
