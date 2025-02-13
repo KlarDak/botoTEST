@@ -43,13 +43,6 @@
             $this->assertEquals(1, $checkRequest);
         }
 
-        public function testGetInfo() : void {
-            $asResult = self::$feedbackBotUser->getInfo();
-
-            $this->assertInstanceOf(FeedbackUserInfo::class, $asResult);
-            $this->assertEquals(1, $asResult->user_id);
-        }
-
         public function testBanUser() : void {
             $asResult = self::$feedbackBotUser->banUser();
             $this->assertTrue($asResult);

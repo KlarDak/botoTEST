@@ -13,11 +13,6 @@
          * @var FeedbackConnector
          */
         public FeedbackConnector $feedbackConnector;
-        /**
-         * ID управляемого пользователя
-         * @var int
-         */
-        public int $user_id;
 
         /**
          * Доступные к изменению методы
@@ -56,11 +51,7 @@
             return $asResult;
         }
 
-        /**
-         * Получает информацию о пользователе
-         * @return \KlarDak\FeedbackDB\Types\FeedbackUserInfo
-         */
-        public function getInfo(): FeedbackUserInfo {
+        public function setUserInfo(): bool {
             $userInfoQuery = "SELECT * FROM usersbot WHERE user_id = :user_id";
             $userInfoParam = [
                 ":user_id" => $this->user_id
@@ -68,7 +59,9 @@
 
             $userInfo = $this->feedbackConnector->returnArrayPrepare($userInfoQuery, $userInfoParam);
 
-            return new FeedbackUserInfo($userInfo[0]);
+            $this->make($userInfo[0] ?? []);
+
+            return true;
         }
 
         /**
@@ -89,7 +82,11 @@
                     ":name" => $name
                 ];
 
-                return $this->feedbackConnector->returnBoolPrepare($createUserPrepare, $createUserParams);
+                $asResult = $this->feedbackConnector->returnBoolPrepare($createUserPrepare, $createUserParams);
+
+                if ($asResult) {
+                    return $this->setUserInfo();
+                }
             }
 
             return false;

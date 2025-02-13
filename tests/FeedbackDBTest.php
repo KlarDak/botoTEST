@@ -1,6 +1,7 @@
 <?php
     namespace KlarDak\FeedbackDBTests;
 
+    use KlarDak\FeedbackDB\FeedbackBotUser;
     use KlarDak\FeedbackDB\FeedbackDB;
     use KlarDak\FeedbackDB\FeedbackMessage;
     use KlarDak\FeedbackDB\Types\FeedbackConnector;
@@ -54,6 +55,14 @@
             $asResult = self::$feedbackDB->getCountOfUnreadMessages();
 
             $this->assertIsInt($asResult);
+        }
+
+        public function testGetUser() : void {
+            $asResult = self::$feedbackDB->getUser(1);
+
+            $this->assertInstanceOf(FeedbackBotUser::class, $asResult);
+            
+            $this->assertEquals(null, $asResult->user_id);
         }
 
         public function testDropMessage() : void {

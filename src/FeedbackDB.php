@@ -95,8 +95,11 @@
             );
         }
         
-        public function checkUser(int $user_id) : FeedbackBotUser {
-            return new FeedbackBotUser($this->feedbackDBConnector, $user_id);
+        public function getUser(int $user_id) : FeedbackBotUser {
+            $feedbackBotUser = new FeedbackBotUser($this->feedbackDBConnector, $user_id);
+            $feedbackBotUser->setUserInfo();
+
+            return $feedbackBotUser;
         }
 
         private function getLastInsertID() : int {
