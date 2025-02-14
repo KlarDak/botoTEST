@@ -33,7 +33,6 @@
             $asResult = (bool) self::$feedbackBotUser->createUser(
                 user_id: 1,
                 username: "TestUser",
-                name: "Test User"
             );
 
             $this->assertTrue($asResult);
@@ -79,15 +78,6 @@
 
             $checkRequest = $this->checkCountWith("user_id = 1 AND is_admin = ". (int) $is_admin);
             $this->assertEquals(1, $checkRequest);
-        }
-
-        public function testSetTotalMessages() : void {
-            $setCount = 2;
-            $totalMessages = self::$feedbackBotUser->setTotalMessages($setCount);
-            $this->assertTrue($totalMessages);
-
-            $checkRequest = self::$feedbackConnector->returnArrayQuery("SELECT total_messages FROM usersbot WHERE user_id = 1 AND is_dropped = 0");
-            $this->assertEquals($setCount, $checkRequest[0]["total_messages"]);
         }
 
         public function testSetRepliedMessages() : void {

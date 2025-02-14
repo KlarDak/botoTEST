@@ -21,10 +21,8 @@
         protected array $availableMethods = [
             "user_id",
             "username",
-            "name",
             "date_registration",
             "is_admin",
-            "total_messages",
             "replied_messages",
             "is_banned",
             "is_dropped"
@@ -71,15 +69,14 @@
          * @param string $name User's name
          * @return bool
          */
-        public function createUser(int $user_id, string $username, string $name) : bool {
-            if ($user_id > 0 && trim(strlen($username)) > 0 && trim(strlen($name)) > 0) {
+        public function createUser(int $user_id, string $username) : bool {
+            if ($user_id > 0 && trim(strlen($username)) > 0) {
                 $this->user_id = $user_id;
                 
-                $createUserPrepare = "INSERT INTO usersbot (user_id, username, name, date_registration, total_messages, replied_messages) VALUES (:user_id, :username, :name, NOW(), 0, 0)";
+                $createUserPrepare = "INSERT INTO usersbot (user_id, username, date_registration, replied_messages) VALUES (:user_id, :username, NOW(), 0)";
                 $createUserParams = [
                     ":user_id" => $user_id,
                     ":username" => $username,
-                    ":name" => $name
                 ];
 
                 $asResult = $this->feedbackConnector->returnBoolPrepare($createUserPrepare, $createUserParams);
@@ -150,11 +147,7 @@
                 ]
             );
         }
-        public function setTotalMessages(int $count): bool {
-            return $this->feedbackConnector->returnBoolQuery(
-                "UPDATE usersbot SET total_messages = total_messages + {$count} WHERE user_id = {$this->user_id}"
-            );
-        }
+
         public function setRepliedMessages(int $count): bool {
             return $this->feedbackConnector->returnBoolQuery(
                 "UPDATE usersbot SET replied_messages = replied_messages + {$count} WHERE user_id = {$this->user_id}"

@@ -57,6 +57,16 @@
             $this->assertIsInt($asResult);
         }
 
+        public function testGetUnreadMessages() : void {
+            $asResult = self::$feedbackDB->getUnreadMessages(
+                count_messages: 1,
+                page: 1
+            );
+
+            $this->assertInstanceOf(FeedbackMessage::class, $asResult[0]);
+            $this->assertIsInt(1, $asResult[0]->regist_message_id);
+        }
+
         public function testGetUser() : void {
             $asResult = self::$feedbackDB->getUser(1);
 
@@ -73,7 +83,8 @@
             $this->assertTrue($asResult);
 
             $checkResult = self::$feedbackConnector->returnCount(
-                "SELECT EXISTS (SELECT 1 FROM messages WHERE regist_message_id = 1 AND is_dropped = 0)"
+                "SELECT EXISTS (SELECT 1 FROM messages WHERE regist_message_id = 1 AND is_dropped = 0)",
+                []
             );
 
             $this->assertEquals(0, $checkResult);

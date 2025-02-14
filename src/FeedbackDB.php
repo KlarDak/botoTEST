@@ -65,13 +65,17 @@
          * @return array
          */
         public function getUnreadMessages(int $count_messages, int $page) : array {
-            return $this->feedbackDBConnector->returnArrayPrepare(
-                "SELECT regist_message_id, user_id, message_id, message_text, file_url, date_created FROM messages WHERE is_answer = 0 AND is_dropped = 0 LIMIT :count_messages OFFSET :page ORDER BY regist_message_id DESC",
-                [
-                    ":count_message" => $count_messages,
-                    ":page" => $count_messages * $page
-                ]
+            $unreadMessages =  $this->feedbackDBConnector->returnArrayQuery(
+                "SELECT regist_message_id, user_id, message_id, message_text, file_url, date_created FROM messages WHERE is_answer = 0 AND is_dropped = 0 LIMIT {$count_messages} OFFSET " . $count_messages * ($page - 1),
             );
+
+            $arrayWithMessages = [];
+
+            foreach ($unreadMessages as $key => $value) {
+                $arrayWithMessages[$key] = new FeedbackMessage($value);
+            }
+
+            return $arrayWithMessages;
         }
         public function getCountOfUnreadMessages() : int {
             $getCountMessages = $this->feedbackDBConnector->returnArrayQuery("SELECT COUNT(regist_message_id) FROM messages");
@@ -80,19 +84,21 @@
         }
 
         public function dropMessage(int $regist_message_id) : bool {
-            $this->feedbackDBConnector->returnBoolPrepare(
+            $isDropped = $this->feedbackDBConnector->returnBoolPrepare(
                 "UPDATE messages SET is_dropped = 1 WHERE regist_message_id = :rmi",
                 [
                     ":rmi" => $regist_message_id
                 ]
             );
 
-            return $this->feedbackDBConnector->returnBoolPrepare(
+            $isUpdated = $this->feedbackDBConnector->returnBoolPrepare(
                 "UPDATE messages SET answer_message_id = null WHERE answer_message_id = :ami",
                 [
                     ":ami" => $regist_message_id
                 ]
             );
+
+            return ($isDropped && $isUpdated) ? true : false;
         }
         
         public function getUser(int $user_id) : FeedbackBotUser {

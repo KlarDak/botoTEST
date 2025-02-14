@@ -16,6 +16,7 @@
 
         public function returnBoolPrepare(string $query, array $params) : bool {
             $prepareQuery = $this->feedbackDBConnector->prepare($query);
+
             $asResult = $prepareQuery->execute($params);
 
             return ($asResult !== false) ? true : false;
@@ -24,15 +25,16 @@
         public function returnArrayQuery(string $query, ?int $array_method = null) : array { 
             $asResult = $this->feedbackDBConnector->query($query);
 
-            return ($asResult !== false) ? $asResult->fetchAll($array_method ?? \PDO::FETCH_ASSOC) : [];
+            return ($asResult !== false) ? $asResult->fetchAll(\PDO::FETCH_ASSOC) : [];
         }
 
         
-        public function returnArrayPrepare(string $query, array $params, ?int $array_method = null) : array {
+        public function returnArrayPrepare(string $query, array $params) : array {
             $prepareQuery = $this->feedbackDBConnector->prepare($query);
+
             $asResult = $prepareQuery->execute($params);
 
-            return ($asResult !== false) ? $prepareQuery->fetchAll($array_method ?? \PDO::FETCH_ASSOC) : [];
+            return ($asResult !== false) ? $prepareQuery->fetchAll(\PDO::FETCH_ASSOC) : [];
         }
 
         public function returnCount(string $query, ?array $params = []) : int {
