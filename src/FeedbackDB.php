@@ -2,6 +2,7 @@
     namespace KlarDak\FeedbackDB;
     
     use KlarDak\FeedbackDB\Types\FeedbackConnector;
+    use KlarDak\FeedbackDB\Types\FeedbackMessage;
 
     class FeedbackDB {
         public $feedbackDBConnector;
@@ -106,6 +107,10 @@
             $feedbackBotUser->setUserInfo();
 
             return $feedbackBotUser;
+        }
+
+        public function getAdmins() : FeedbackBotAdmin {
+            return new FeedbackBotAdmin($this->feedbackDBConnector);
         }
 
         private function getLastInsertID() : int {

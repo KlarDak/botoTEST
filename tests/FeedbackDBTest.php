@@ -1,9 +1,10 @@
 <?php
     namespace KlarDak\FeedbackDBTests;
 
+    use KlarDak\FeedbackDB\FeedbackBotAdmin;
     use KlarDak\FeedbackDB\FeedbackBotUser;
     use KlarDak\FeedbackDB\FeedbackDB;
-    use KlarDak\FeedbackDB\FeedbackMessage;
+    use KlarDak\FeedbackDB\Types\FeedbackMessage;
     use KlarDak\FeedbackDB\Types\FeedbackConnector;
     use KlarDak\FeedbackDB\Types\FeedbackConnectorPDO;
     use PHPUnit\Framework\TestCase;
@@ -73,6 +74,12 @@
             $this->assertInstanceOf(FeedbackBotUser::class, $asResult);
             
             $this->assertEquals(null, $asResult->user_id);
+        }
+
+        public function testGetAdmins() : void {
+            $asResult = self::$feedbackDB->getAdmins();
+
+            $this->assertInstanceOf(FeedbackBotAdmin::class, $asResult);
         }
 
         public function testDropMessage() : void {

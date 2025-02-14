@@ -1,6 +1,6 @@
 <?php
 
-    namespace KlarDak\FeedbackDB;
+    namespace KlarDak\FeedbackDB\Types;
 
     class FeedbackMessage {
         public int $regist_message_id;
