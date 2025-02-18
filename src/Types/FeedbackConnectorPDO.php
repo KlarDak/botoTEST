@@ -4,8 +4,21 @@
 
     class FeedbackConnectorPDO implements FeedbackConnector {
         public \PDO $feedbackDBConnector;
+        private array $DBSaver;
         public function __construct(string $hostname, string $login, string $password, string $dbname, string $driver = "mysql") {
-            $this->feedbackDBConnector = new \PDO("{$driver}:host={$hostname};dbname={$dbname}", $login, $password);
+            $this->DBSaver = [
+                "hostname" => $hostname,
+                "login" => $login,
+                "password" => $password,
+                "dbname" => $dbname,
+                "driver" => $driver
+            ];
+
+            $this->connectToDB();
+        }
+
+        private function connectToDB() {
+            $this->feedbackDBConnector = new \PDO("{$this->DBSaver['driver']}:host={$this->DBSaver['hostname']};dbname={$this->DBSaver['dbname']}", $this->DBSaver['login'], $this->DBSaver['password']);
         }
 
         public function returnBoolQuery($query) : bool {
@@ -46,5 +59,13 @@
 
         public function getPDO() : \PDO {
             return $this->feedbackDBConnector;
+        }
+
+        public function __sleep() {
+            return ["DBSaver"];
+        }
+
+        public function __wakeup() {
+            $this->connectTODB();
         }
     }
