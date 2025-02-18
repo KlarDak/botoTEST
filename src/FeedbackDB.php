@@ -113,7 +113,7 @@
             return new FeedbackBotAdmin($this->feedbackDBConnector);
         }
 
-        private function getLastInsertID() : int {
+        public function getLastInsertID() : int {
             return $this->feedbackDBConnector->feedbackDBConnector->lastInsertId();
         }
     }
