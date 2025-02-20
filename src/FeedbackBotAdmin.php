@@ -28,9 +28,9 @@
         }
 
         public function asCount() : int {
-            $getCountUsers = $this->feedbackDBConnector->returnArrayQuery("SELECT COUNT(is_admin) FROM usersbot");
+            $getCountUsers = $this->DBConnector->returnCount("SELECT COUNT(is_admin) FROM usersbot");
 
-            return $getCountUsers[0]["COUNT(regist_message_id)"];
+            return $getCountUsers;
 
         }
     }

@@ -113,6 +113,10 @@
             return new FeedbackBotAdmin($this->feedbackDBConnector);
         }
 
+        public function getBannedUsers() : FeedbackBotBanUsers {
+            return new FeedbackBotBanUsers($this->feedbackDBConnector);
+        }
+
         public function getLastInsertID() : int {
             return $this->feedbackDBConnector->feedbackDBConnector->lastInsertId();
         }

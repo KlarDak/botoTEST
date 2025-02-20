@@ -7,6 +7,7 @@
     use KlarDak\FeedbackDB\Types\FeedbackMessage;
     use KlarDak\FeedbackDB\Types\FeedbackConnector;
     use KlarDak\FeedbackDB\Types\FeedbackConnectorPDO;
+    use KlarDak\FeedbackDB\Types\FeedbackUserInfo;
     use PHPUnit\Framework\TestCase;
 
     class FeedbackDBTest extends TestCase {
@@ -80,6 +81,15 @@
             $asResult = self::$feedbackDB->getAdmins();
 
             $this->assertInstanceOf(FeedbackBotAdmin::class, $asResult);
+        }
+
+        public function testGetBannedUsers() : void {
+            $asResult = self::$feedbackDB->getBannedUsers();
+
+            $this->assertEquals(1, $asResult->asCount());
+            $this->assertInstanceOf(FeedbackUserInfo::class, $asResult->asList()[0]);
+            $this->assertEquals(1, $asResult->asList()[0]->user_id);
+
         }
 
         public function testDropMessage() : void {
