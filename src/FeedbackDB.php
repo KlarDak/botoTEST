@@ -79,9 +79,9 @@
             return $arrayWithMessages;
         }
         public function getCountOfUnreadMessages() : int {
-            $getCountMessages = $this->feedbackDBConnector->returnArrayQuery("SELECT COUNT(regist_message_id) FROM messages");
+            $getCountMessages = $this->feedbackDBConnector->returnCount("SELECT COUNT(regist_message_id) FROM messages WHERE is_dropped = 0", []);
 
-            return $getCountMessages[0]["COUNT(regist_message_id)"];
+            return $getCountMessages;
         }
 
         public function dropMessage(int $regist_message_id) : bool {
