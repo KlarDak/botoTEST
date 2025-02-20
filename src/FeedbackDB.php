@@ -23,7 +23,7 @@
         }
 
         public function addReplyToMessage(int $user_id, int $regist_message_id, string $message_text, ?string $file_url = null) : bool {
-            $addReplyQuery = "INSERT INTO messages (user_id, message_text, file_url, date_created) VALUES (:user_id, :message_text, :file_url, NOW())";
+            $addReplyQuery = "INSERT INTO messages (user_id, message_text, file_url, date_created, is_answer) VALUES (:user_id, :message_text, :file_url, NOW(), 1)";
             $addReplyParams = [
                 ":user_id" => $user_id,
                 ":message_text" => $message_text,
